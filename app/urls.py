@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from app import indexBlueprint
 
 from app.views.index import indexView
