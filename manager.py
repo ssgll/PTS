@@ -3,7 +3,7 @@ from flask import Flask
 from config import config
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from app.models import db, User
+from app.models import db, UserInformation
 from app.urls import indexBlueprint
 
 

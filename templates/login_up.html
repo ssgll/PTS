@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h2>注册</h2>
+    <form action="" method="POST" name="sign_up" >
+        {{ form.hidden_tag() }}
+
+        <label>用户名：（15个字符以内）</label>
+        <p>
+            {{ form.user_name }}
+        </p>
+        {% for error in form.errors.user_name %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+
+        <label>E-mail: </label>
+        <p>{{ form.user_email }}</p>
+        {% for error in form.errors.user_email %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+
+        <label>密码:</label>
+        <p>{{ form.password }}</p>
+        {% for error in form.errors.password %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+
+        <p>{{ form.submit }}</p>
+    </form>
+</div>
+
+<div class="alert alert-success alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>
+        注意：
+    </h4> 本站与京东等商城无关，只收集网上可见的商品名称、价格等信息。密码加密存储，但也请勿使用常用的商城密码</a>
+</div>
+{% endblock %}
