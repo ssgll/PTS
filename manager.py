@@ -33,6 +33,6 @@ app.register_blueprint(indexBlueprint)
 manager = Manager(app=app)
 manager.add_command("db", MigrateCommand)
 
-# 启动实例
+# 启动实例（仅调试使用
 if __name__ == "__main__":
     manager.run()
