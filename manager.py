@@ -4,30 +4,37 @@ from config import config
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app.models import db, UserInformation
-from app.urls import indexBlueprint
+
 
 
 def createApp():
     app = Flask(
-        __name__,
-        template_folder=config["Default"].TEMPLATE_FOLDER,
-        static_folder=config["Default"].STATIC_FOLDER,
+        __name__
     )
     app.config.from_object(config["Default"])
     return app
 
 
-# 实例化app
-app = createApp()
 
-# 数据库配置
-db.init_app(app=app)
-migrate = Migrate(app=app, db=db)
+def migrateApp(app,db):
+	# 数据库配置
+	db.init_app(app=app)
+	migrate = Migrate(app=app, db=db)
+	return app
 
-# 蓝图
-app.register_blueprint(indexBlueprint)
+def registerBlueprint(app):
+	# 蓝图
+	from app.urls import indexBlueprint
+
+	app.register_blueprint(indexBlueprint)
+	return app
 
 # session
+
+#实例化
+app = createApp()
+app = migrateApp(app=app, db=db)
+app = registerBlueprint(app)
 
 # 命令行
 manager = Manager(app=app)

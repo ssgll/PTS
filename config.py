@@ -27,8 +27,9 @@ class Config:
 
     # 根目录 模板 静态文件
     BASE_DIR = os.getcwd()
-    TEMPLATE_FOLDER = os.path.join(BASE_DIR, "templates")
-    STATIC_FOLDER = os.path.join(BASE_DIR, "static")
+    APP_TEMPLATE_FOLDER = os.path.join(BASE_DIR, "app/templates")
+    APP_STATIC_FOLDER = os.path.join(BASE_DIR, "app/static")
+    STATIC_URL_PATH = os.path.join(BASE_DIR, "app/static")
 
     # Session配置    
     SESSION_TYPE = "Redis"

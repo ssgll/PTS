@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+<form action="{{url_for('addmonitoritem', user_id=current_user.id) }}" method="POST" name="publish">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        <label>Product URL：</label>
+        <p>{{ form.item_url }}</p>
+        {% for error in form.errors.item_url %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <label>expected price：</label>
+        <p>{{ form.user_price }}</p>
+        {% for error in form.errors.user_price %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <label>Store name：</label>
+        <p>{{ form.mall_id }}</p>
+        {% for error in form.errors.mall_id %}
+        <p style="color:red;">[-] {{ error }}</p>
+        {% endfor %}
+        <p>{{ form.submit }}</p>
+    </div>
+</form>
+</div>
+<div class="alert alert-success alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h4>
+        Warning：
+    </h4> <b>It takes a few sec to crawl after add an item</b>,You won't receive reminder if you set a higher price.</a>
+</div>
+{% endblock %}
