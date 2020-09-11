@@ -71,4 +71,4 @@ class UserCommodity (db.Model):
 
 
     def __repr__(self):
-        return "<userID:{}>\t<username:{}>".format (self.userID, self.commodityName)
+        return "<userID:{}>\t<commodityName:{}>".format (self.userID, self.commodityName)
