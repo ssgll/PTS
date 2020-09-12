@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 from app import indexBlueprint
 
-from app.views import indexView, loginView, signupView, about_meView, monitorView, addMonitorView
+from app.views import indexView, loginView, signupView, about_meView, monitorView, addMonitorView, logoutView
 
 # index
 indexBlueprint.add_url_rule ("/", endpoint="index", view_func=indexView, methods=["POST", "GET"])
@@ -17,6 +17,10 @@ indexBlueprint.add_url_rule ("/signup", endpoint="signup", view_func=signupView,
 indexBlueprint.add_url_rule ("/monitor", endpoint="monitor", view_func=monitorView, methods=["POST", "GET"])
 # addMonitor
 indexBlueprint.add_url_rule ("/addmonitor", endpoint="addmonitor", view_func=addMonitorView, methods=["POST", "GET"])
+# logout
+indexBlueprint.add_url_rule ("/logout", endpoint="logout", view_func=logoutView, methods=["POST", "GET"])
+
+
 
 
 # indexBlueprint.add_url_rule("/about-me", "aboutme", about_me, methods=["POST", "GET"])

@@ -17,7 +17,7 @@ class SignUpForm(FlaskForm):
         "user name",
         validators=[
             DataRequired(message="用户名不能为空"),
-            Length(3,15, message="用户名在5-15个字之间"),
+            Length(5,15, message="用户名在5-15个字之间"),
             Regexp("^[A-Za-z][A-Za-z0-9_.]*$", message="用户名只能由字母数字和下划线组成"),
         ],
     )
@@ -44,13 +44,12 @@ class LoginForm(FlaskForm):
     user_name = StringField(
         "user name",
         validators=[
-            DataRequired("用户名不能为空"),
-            Length(3, 15),
-            Regexp("^[A-Za-z][A-Za-z0-9_.]*$"),
+            DataRequired(message="用户名不能为空"),
+            Length(5, 15, message="用户名在5-15个字之间"),
         ],
     )
     remember_me = BooleanField("remember me", default=False)
-    password = PasswordField("Password", validators=[DataRequired("必须填写密码")])
+    password = PasswordField("Password", validators=[DataRequired(message="必须填写密码")])
     submit = SubmitField("log in")
 
 

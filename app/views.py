@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, request, flash, session
 from app.forms import LoginForm, SignUpForm, AddMonitorItemForm
 from app.models import db, UserInformation, UserCommodity
 from flask_login import login_required, logout_user, login_user, current_user
+from werkzeug.security import check_password_hash
 
 
 # 主页
@@ -13,31 +14,38 @@ def indexView():
 # 注册
 def signupView():
     form = SignUpForm()
+    # 接受返回的数据
     if request.method == "POST":
         if form.validate_on_submit():
             userName = request.form.get("user_name")
             email = request.form.get("user_email")
             password = request.form.get("password")
             user = UserInformation(userName=userName, password=password, email=email)
+            # 查看是否已经注册
             check_ = (
                 db.session.query(UserInformation)
-                .filter(db.or_(userName == userName, email == email))
+                .filter(
+                    db.or_(
+                        UserInformation.userName == userName,
+                        UserInformation.email == email,
+                    )
+                )
                 .first()
             )
-            if check_:
+            if check_ is not None:
                 flash("用户名或邮箱已经注册")
                 return redirect(url_for("indexBlueprint.signup"))
             else:
                 try:
+                    # 校验成功，写入 ，并跳转到主页，获取到session
                     db.session.add(user)
                     db.session.commit()
-                    logout_user(user)
+                    login_user(user)
                     session["user"] = user.userName
                     session["userID"] = user.id
                     return redirect(url_for("indexBlueprint.index"))
                 except AttributeError as e:
-                    db.session.rollback()
-                    flash("服务器错误，请重试或联系网站管理员")
+                    flash(e)
                     return redirect(url_for("indexBlueprint.signup"))
     return render_template("sign_up.html", form=form)
 
@@ -45,9 +53,35 @@ def signupView():
 # 登录
 def loginView():
     form = LoginForm()
+    # 判断用户是否已经登录
+    if current_user.is_authenticated:
+        redirect(url_for("indexBlueprint.index"))
+    if request.method == "POST":
+        userName = request.form.get("user_name")
+        password = request.form.get("password")
+
+        try:
+            user = (
+                db.session.query(UserInformation)
+                .filter(UserInformation.userName == userName)
+                .first()
+            )
+            passwordHash = user.passwordHash
+            if check_password_hash(passwordHash, password):
+                login_user(user)
+                session["user"] = user.userName
+                session["userID"] = user.id
+                return redirect(url_for("indexBlueprint.index"))
+            else:
+                flash("密码错误，请重试")
+                return redirect(url_for("indexBlueprint.login"))
+        except AttributeError as e:
+            flash("用户不存在")
+            return redirect(url_for("indexBlueprint.login"))
     return render_template("login.html", form=form)
 
 
+@login_required
 def logoutView():
     session.clear()
     logout_user()
