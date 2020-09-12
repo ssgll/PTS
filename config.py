@@ -31,8 +31,9 @@ class Config:
     APP_STATIC_FOLDER = os.path.join(BASE_DIR, "app/static")
     STATIC_URL_PATH = os.path.join(BASE_DIR, "app/static")
 
-    # Session配置    
-    SESSION_TYPE = "Redis"
+    # Session配置
+    SECRET_KEY = "OO0ryy#Z2OcySOBpP6OTen*oeuqq8BxE"
+    SESSION_TYPE = "redis"
     REDIS_HOST = "127.0.0.1"
     REDIS_PORT = 6379
     REDIS_PASSWORD = "383687"
@@ -41,7 +42,6 @@ class Config:
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = "session:"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=2)
-    SECRET_KEY = "$%mgPl5lC&syCO8W%T0uQ&IP^f$VONX0"
 
 
 class Development(Config):
@@ -50,6 +50,7 @@ class Development(Config):
 
 class Production(Config):
     pass
+
 
 config = {
     "Config": Config,

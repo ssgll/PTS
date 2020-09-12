@@ -3,6 +3,7 @@
 <div class="jumbotron">
     <h2>Login</h2>
     <form action="/login" method="post" name="login" role="form">
+        {{ form.csrf_token() }}
         {{ form.hidden_tag() }}
            <label>Username：</label>
            <p>{{ form.user_name }}</p>
