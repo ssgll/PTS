@@ -57,13 +57,6 @@ admin = Admin(name="monitorProject")
 admin.init_app(app=app)
 
 
-# 添加admin界面
-class AdminView(BaseView):
-    @expose("/")
-    def index(self):
-        return self.render("admin.html")
-
-
 # 实例化界面
 admin.add_view(ModelView(UserInformation, db.session))
 admin.add_view(ModelView(UserCommodity, db.session))
