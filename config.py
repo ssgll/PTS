@@ -37,7 +37,9 @@ class Config:
     REDIS_HOST = "127.0.0.1"
     REDIS_PORT = 6379
     REDIS_PASSWORD = "383687"
-    REDIS_POOL = redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
+    REDIS_POOL = redis.ConnectionPool(
+        host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
+    )
     SESSION_REDIS = redis.Redis(connection_pool=REDIS_POOL)
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = "session:"

@@ -11,7 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {#[if lte IE 8]><script src="/static/js/ie/html5shiv.js"></script><![endif]#}
-    <link rel="stylesheet" href="{{ url_for('indexBlueprint.static',filename='css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/main.css') }}" />
     {#[if lte IE 8]><link rel="stylesheet" href="/static/css/ie8.css" /><![endif]#}
 </head>
 
@@ -25,38 +25,34 @@
                 {# Logo #}
                 <div id="logo">
                     {# <h1><a href="index.html">Rude3Knife</a></h1> #}
-                    <h1><a href="#">Rude3Knife</a></h1>
-                    <span>探索有趣创意 PS:网站即将改版，敬请期待！</span>
+                    <h1><a href="#">######</a></h1>
+                    <span>XXXXXXXXX</span>
                 </div>
 
                 {# Nav #}
                 <nav id="nav">
                     <ul>
                         {# <li class="current"><a href="index.html">首页</a></li> #}
-                        <li class="current"><a href="#">首页</a></li>
+                        <li class="current"><a href="{{ url_for('webBlueprint.index') }}">首页</a></li>
                         <li>
                             <a href="#">发现</a>
                             <ul>
                                 <li>
                                      {% if not current_user.is_authenticated %}
-                                    {# <a href="{{ url_for('login') }}">电商监控</a> #}
+                                     <a href="{{ url_for('webBlueprint.login') }}">登录</a>
                                     {% else %}
-                                    {# <a href="{{ url_for('users', user_id = current_user.id) }}">电商监控</a> #}
-                                    <a href="#">电商监控</a>
+                                     <a href="{{ url_for('users', user_id = current_user.id) }}">电商监控</a>
                                     {% endif %}
                                 </li>
-                                {# <li><a href="{{ url_for('twitter') }}">推特治国</a></li> #}
                             </ul>
                         </li>
-                        {# <li><a href="{{ url_for('about_me') }}">关于我</a></li> #}
-                        <li><a href="#">关于我</a></li>
                          {% if not current_user.is_authenticated %}
-                             <li><a href="{{ url_for('indexBlueprint.login') }}">登录</a></li>
-                             <li><a href="{{ url_for('indexBlueprint.signup') }}">注册</a></li>
+                             <li><a href="{{ url_for('webBlueprint.login') }}">登录</a></li>
+                             <li><a href="{{ url_for('webBlueprint.signup') }}">注册</a></li>
                         {% else %}
-                         <li><a href="{{ url_for('indexBlueprint.logout', user_id = current_user.id) }}">个人主页</a>
+                         <li><a href="{{ url_for('webBlueprint.logout', user_id = current_user.id) }}">个人主页</a>
                             <ul>
-                                <li><a href="{{ url_for('indexBlueprint.logout', user_id = current_user.id) }}">登出</a></li>
+                                <li><a href="{{ url_for('webBlueprint.logout', user_id = current_user.id) }}">登出</a></li>
                             </ul>
                          </li>
                         {% endif %}
@@ -72,18 +68,13 @@
                 <div class="row">
                     <div class="7u 12u(medium)">
                         <h2>电商价格监控</h2>
-                        <p>自行指定商品，降价邮件提醒，支持京东商城。</p>
+                        <p>自行指定商品，降价邮件提醒。</p>
                     </div>
                     <div class="5u 12u(medium)">
                         <ul>
                             <li>
-                                {# {% if not current_user.is_authenticated %} #}
-                                {% if 1 %}
-                                {# <a class="button big icon fa-arrow-circle-right" href="{{ url_for('login') }}">进入监控</a> #}
-                                <a class="button big icon fa-arrow-circle-right" href="#">进入监控</a>
-                                {% else %}
-                                {# <a class="button big icon fa-arrow-circle-right" href="{{ url_for('users', user_id = current_user.id) }}">进入监控</a> #}
-                                <a class="button big icon fa-arrow-circle-right" href="#">进入监控</a>
+                                 {% if not current_user.is_authenticated %}
+                                 <a class="button big icon fa-arrow-circle-right" href="{{ url_for('webBlueprint.monitor', user_id = current_user.id) }}">进入监控</a>
                                 {% endif %}
                             </li>
                         </ul>
@@ -99,18 +90,18 @@
                     <div class="4u 12u(medium)">
 
                         {# Box #}
-                        <section class="box feature">
+{#                        <section class="box feature">#}
                             {# <a href="{{ url_for('twitter') }}" class="image featured"><img src="/static/images/trump.jpg" alt="" /></a> #}
-                            <a href="#" class="image featured"><img
-                                    src="{{ url_for('indexBlueprint.static',filename='img/trump.jpg') }}" alt="" /></a>
-                            <div class="inner">
-                                <header>
-                                    <h2>推特治国</h2>
-                                    <p>实时获取川普推特内容</p>
-                                </header>
-                                <p>由python库tweepy支持</p>
-                            </div>
-                        </section>
+{#                            <a href="#" class="image featured"><img#}
+{#                                    src="{{ url_for('webBlueprint.static',filename='img/trump.jpg') }}" alt="" /></a>#}
+{#                            <div class="inner">#}
+{#                                <header>#}
+{#                                    <h2>推特治国</h2>#}
+{#                                    <p>实时获取川普推特内容</p>#}
+{#                                </header>#}
+{#                                <p>由python库tweepy支持</p>#}
+{#                            </div>#}
+{#                        </section>#}
 
                     </div>
                     <div class="4u 12u(medium)">
@@ -118,7 +109,7 @@
                         {# Box #}
                         <section class="box feature">
                             <a href="#" class="image featured"><img
-                                    src="{{ url_for('indexBlueprint.static',filename='img/python-logo.png') }}" alt="" /></a>
+                                    src="{{ url_for('webBlueprint.static',filename='img/python-logo.png') }}" alt="" /></a>
                             <div class="inner">
                                 <header>
                                     <h2>免费定向代理池</h2>
@@ -134,7 +125,7 @@
                         {# Box #}
                         <section class="box feature">
                             <a href="#" class="image featured"><img
-                                    src="{{ url_for('indexBlueprint.static',filename='img/idea.png') }}" alt="" /></a>
+                                    src="{{ url_for('webBlueprint.static',filename='img/idea.png') }}" alt="" /></a>
                             <div class="inner">
                                 <header>
                                     <h2>创意收集</h2>
@@ -160,7 +151,7 @@
                         <section class="widget links">
                             <h3>网站导航</h3>
                             <ul class="style2">
-                                <li><a href="index.html">首页</a></li>
+                                <li><a href="{{ url_for('webBlueprint.index') }}">首页</a></li>
                                 {# <li><a href="{{ url_for('about_me') }}">关于我</a></li> #}
                                 <li><a href="#">关于我</a></li>
                             </ul>
@@ -228,25 +219,25 @@
     {# Scripts #}
 
     {# <script src="/static/js/jquery.min.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.min.js') }}"></script>
     {# <script src="/static/js/jquery.dropotron.min.js"></script>#}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.dropotron.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.dropotron.min.js') }}"></script>
     {# <script src="/static/js/skel.min.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/skel.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/skel.min.js') }}"></script>
     {# <script src="/static/js/util.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/util.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/util.js') }}"></script>
     {#[if lte IE 8]><script src="/static/js/ie/respond.min.js"></script><![endif]#}
     {# <script src="/static/js/main.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/main.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/main.js') }}"></script>
 
     {# 分享小插件 #}
 
     {# <link rel="stylesheet" href="/static/dist-share/css/share.min.css"> #}
-    <link rel="stylesheet" href="{{ url_for('indexBlueprint.static',filename='css/share.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/share.min.css') }}">
     {# <script src="/static/bootstrap/jquery.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.js') }}"></script>
     {# <script src="/static/dist-share/js/jquery.share.min.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
     <script>
         $('#share-1').share();
         $('#share-2').share({ sites: ['qzone', 'qq', 'weibo', 'wechat'] });

@@ -8,13 +8,13 @@
     {% else %}
     <title>Rude3Knife</title>
     {% endif %}
-    <link rel="stylesheet" href="{{ url_for('indexBlueprint.static',filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('indexBlueprint.static',filename='css/share.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/share.min.css') }}">
     {# <link rel="stylesheet" href="/static/dist-share/css/share.min.css"> #}
     {# <script src="/static/bootstrap/jquery.min.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.min.js') }}"></script>
     {# <script src="/static/bootstrap/bootstrap.min.js"></script> #}
-    <script src="{{ url_for('indexBlueprint.static',filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/bootstrap.min.js') }}"></script>
 </head>
 
 
@@ -161,8 +161,8 @@
         </nav>
     </div>
 
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('indexBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
     <script>
         $('#share-1').share();
         $('#share-2').share({ sites: ['qzone', 'qq', 'weibo', 'wechat'] });

@@ -3,11 +3,10 @@ from flask import Flask
 from config import config
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from app.models import db, UserInformation, UserCommodity
+from models import db, UserInformation, UserCommodity
 from flask_session import Session
 from flask_login import LoginManager
-from flask_admin import Admin, BaseView, expose
-from flask_admin.contrib.sqla import ModelView
+from admin.admin import AdminView
 
 
 # app
@@ -26,9 +25,9 @@ def migrateApp(app, db):
 
 def registerBlueprint(app):
     # 蓝图
-    from app.urls import indexBlueprint
+    from web.urls import webBlueprint
 
-    app.register_blueprint(indexBlueprint)
+    app.register_blueprint(webBlueprint)
     return app
 
 
@@ -43,7 +42,7 @@ Session(app)
 # 登录
 loginManager = LoginManager()
 loginManager.init_app(app=app)
-loginManager.login_view = "indexBlueprint.index"
+loginManager.login_view = "webBlueprint.index"
 
 
 # 获取登录用户
@@ -53,17 +52,13 @@ def load_user(user_id):
 
 
 # 初始化admin
-admin = Admin(name="monitorProject")
-admin.init_app(app=app)
-
-
-# 实例化界面
-admin.add_view(ModelView(UserInformation, db.session))
-admin.add_view(ModelView(UserCommodity, db.session))
+modelList = (UserInformation, UserCommodity)
+AdminView(app=app, modelList=modelList)
 
 # 命令行
 manager = Manager(app=app)
 manager.add_command("db", MigrateCommand)
+
 
 # 启动实例（仅调试使用
 if __name__ == "__main__":
