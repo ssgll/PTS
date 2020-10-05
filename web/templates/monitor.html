@@ -9,7 +9,7 @@
         </p>
     </div>
     <div class="btn-group">
-        <a class="btn btn-default" href="#">添加监控商品</a>
+        <a class="btn btn-default" href="{{ url_for('webBlueprint.addmonitor', user_id = current_user.id) }}">添加监控商品</a>
     </div>
     <table class="table">
         <thead>

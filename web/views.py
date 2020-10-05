@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from flask import render_template, redirect, url_for, request, flash, session
 from web.forms import LoginForm, SignUpForm, AddMonitorItemForm
-from models import db, UserInformation
+from models import db, UserInformation, UserCommodity
 from flask_login import login_required, logout_user, login_user, current_user
 from werkzeug.security import check_password_hash
 
@@ -98,7 +98,7 @@ def about_meView():
 # 监控页面
 @login_required
 def monitorView():
-    user = db.session.query(UserInformation).one()
+    user = db.session.query(UserInformation).filter(UserInformation.id == current_user.id).one()
     commodityList = user.usercommoditys
     return render_template("monitor.html", user=user, commodityList=commodityList)
 
@@ -107,4 +107,21 @@ def monitorView():
 @login_required
 def addMonitorView():
     form = AddMonitorItemForm()
+    if request.method == 'POST':
+        commodityName = request.form.get("commodityName")
+        hopePrice = request.form.get("hopePrice")
+        user_id = current_user.id
+        count = len(db.session.query(UserCommodity).filter(UserCommodity.userID == user_id).all())
+        if count >= 10:
+            flash("最多添加10条记录,请重试")
+        else:
+            commodity = UserCommodity(userID=user_id, commodityName=commodityName)
+            commodity.hopePrice = hopePrice
+            try:
+                db.session.add(commodity)
+                db.session.commit()
+                return redirect(url_for("webBlueprint.monitor"))
+            except Exception as  e:
+                flash("服务器错误，请重试")
+                return redirect(url_for("webBlueprint.addmonitor", form=form))
     return render_template("add_commodity.html", form=form)
