@@ -11,5 +11,5 @@ adminBlueprint.add_url_rule(
 )
 
 adminBlueprint.add_url_rule(
-    "/UserCommodity", endpoint="UserCommodity", view_func=UserCommodityView, methods=["POST", "GET"]
+    "/UserCommodity/<int:page>", endpoint="UserCommodity", view_func=UserCommodityView, methods=["POST", "GET"]
 )

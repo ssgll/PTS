@@ -9,7 +9,7 @@
         </p>
     </div>
     <div class="btn-group">
-        <a class="btn btn-default" href="{{ url_for('webBlueprint.addmonitor', user_id = current_user.id) }}">添加监控商品</a>
+        <a class="btn btn-info" href="{{ url_for('webBlueprint.addmonitor', user_id = current_user.id) }}">添加监控商品</a>
     </div>
     <table class="table">
         <thead>
@@ -52,7 +52,15 @@
                         {{ commodity.remark }}
                     </td>
                     <td>
-                        {{ commodity.status }}
+                        {% if commodity.status == '0000' %}
+                            有效
+                        {% elif commodity.status == '0001' %}
+                            无效
+                        {% elif commodity.status == '0010' %}
+                            中止
+                        {% else %}
+                            删除
+                        {% endif %}
                     </td>
                     <td>
                         <div class="btn btn-default">
