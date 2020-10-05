@@ -47,7 +47,7 @@ class Config:
 
 
 class Development(Config):
-        # 调试信息
+    # 调试信息
     HOST = "0.0.0.0"
     PORT = 5000
     DEBUG = True
@@ -78,7 +78,9 @@ class Development(Config):
     REDIS_HOST = "172.19.0.3"
     REDIS_PORT = 6379
     REDIS_PASSWORD = "383687"
-    REDIS_POOL = redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD)
+    REDIS_POOL = redis.ConnectionPool(
+        host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD
+    )
     # REDIS_POOL = redis.ConnectionPool(host=REDIS_HOST, port=REDIS_PORT)
     SESSION_REDIS = redis.Redis(connection_pool=REDIS_POOL)
     SESSION_USE_SIGNER = False

@@ -98,7 +98,11 @@ def about_meView():
 # 监控页面
 @login_required
 def monitorView():
-    user = db.session.query(UserInformation).filter(UserInformation.id == current_user.id).one()
+    user = (
+        db.session.query(UserInformation)
+        .filter(UserInformation.id == current_user.id)
+        .one()
+    )
     commodityList = user.usercommoditys
     return render_template("monitor.html", user=user, commodityList=commodityList)
 
@@ -107,11 +111,15 @@ def monitorView():
 @login_required
 def addMonitorView():
     form = AddMonitorItemForm()
-    if request.method == 'POST':
+    if request.method == "POST":
         commodityName = request.form.get("commodityName")
         hopePrice = request.form.get("hopePrice")
         user_id = current_user.id
-        count = len(db.session.query(UserCommodity).filter(UserCommodity.userID == user_id).all())
+        count = len(
+            db.session.query(UserCommodity)
+            .filter(UserCommodity.userID == user_id)
+            .all()
+        )
         if count >= 10:
             flash("最多添加10条记录,请重试")
         else:
@@ -121,7 +129,7 @@ def addMonitorView():
                 db.session.add(commodity)
                 db.session.commit()
                 return redirect(url_for("webBlueprint.monitor"))
-            except Exception as  e:
+            except Exception as e:
                 flash("服务器错误，请重试")
                 return redirect(url_for("webBlueprint.addmonitor", form=form))
     return render_template("add_commodity.html", form=form)

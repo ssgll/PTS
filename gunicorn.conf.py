@@ -14,7 +14,6 @@ pidfile = "logs/gunicorn.pid"
 accesslog = "logs/access.log"
 errorlog = "logs/error.log"
 daemon = True
-workers = multiprocessing.cpu_count()*2+1
+workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = "gevent"
 x_forwarded_for_header = "X-FORWARDED-FOR"
-

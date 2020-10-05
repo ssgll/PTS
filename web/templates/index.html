@@ -50,7 +50,7 @@
                              <li><a href="{{ url_for('webBlueprint.login') }}">登录</a></li>
                              <li><a href="{{ url_for('webBlueprint.signup') }}">注册</a></li>
                         {% else %}
-                         <li><a href="{{ url_for('webBlueprint.logout', user_id = current_user.id) }}">个人主页</a>
+                         <li><a href="{{ url_for('webBlueprint.index', user_id = current_user.id) }}">个人主页</a>
                             <ul>
                                 <li><a href="{{ url_for('webBlueprint.logout', user_id = current_user.id) }}">登出</a></li>
                             </ul>

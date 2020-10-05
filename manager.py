@@ -6,13 +6,12 @@ from flask_migrate import Migrate, MigrateCommand
 from models import db, UserInformation, UserCommodity
 from flask_session import Session
 from flask_login import LoginManager
-from admin.admin import AdminView
 
 
 # app
 def createApp():
     app = Flask(__name__)
-    app.config.from_object(config["Development"])
+    app.config.from_object(config["Default"])
     return app
 
 
@@ -26,8 +25,11 @@ def migrateApp(app, db):
 def registerBlueprint(app):
     # 蓝图
     from web.urls import webBlueprint
+    from admin.urls import adminBlueprint
 
-    app.register_blueprint(webBlueprint)
+    app.register_blueprint(adminBlueprint, url_prefix="/admin")
+    app.register_blueprint(webBlueprint, url_prefix="/")
+
     return app
 
 
@@ -52,8 +54,8 @@ def load_user(user_id):
 
 
 # 初始化admin
-modelList = (UserInformation, UserCommodity)
-AdminView(app=app, modelList=modelList)
+# modelList = (UserInformation, UserCommodity)
+# AdminView(app=app, modelList=modelList)
 
 # 命令行
 manager = Manager(app=app)
