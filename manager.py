@@ -12,7 +12,7 @@ from admin.admin import AdminView
 # app
 def createApp():
     app = Flask(__name__)
-    app.config.from_object(config["Default"])
+    app.config.from_object(config["Development"])
     return app
 
 
