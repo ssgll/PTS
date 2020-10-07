@@ -73,6 +73,7 @@ def loginView():
                 login_user(user)
                 session["user"] = user.userName
                 session["userID"] = user.id
+                print(session["userID"])
                 return redirect(url_for("webBlueprint.index"))
             else:
                 flash("密码错误，请重试")

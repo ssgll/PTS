@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     {% if title %}
-    <title>{{ title }}</title>
+        <title>{{ title }}</title>
     {% else %}
-    <title>Rude3Knife</title>
+        <title>Rude3Knife</title>
     {% endif %}
     <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('webBlueprint.static',filename='css/share.min.css') }}">
@@ -19,71 +19,73 @@
 
 
 <body>
-    <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
 
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
                             data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle
                                 navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span
-                                class="icon-bar"></span></button> <a class="navbar-brand" href="/">Rude3Knife小屋</a>
-                    </div>
+                            class="icon-bar"></span></button>
+                    <a class="navbar-brand" href="/">Rude3Knife小屋</a>
+                </div>
 
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href="/">首页</a>
-                            </li>
-                            <li>
-                                {% if 1 %}
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="/">首页</a>
+                        </li>
+                        <li>
+                            {% if 1 %}
                                 {# <a href="{{ url_for('login') }}">电商监控</a> #}
                                 <a href="#">电商监控</a>
-                                {% else %}
+                            {% else %}
                                 {# <a href="{{ url_for('users', user_id = current_user.id) }}">电商监控</a> #}
                                 <a href="#">电商监控</a>
-                                {% endif %}
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他功能<strong
-                                        class="caret"></strong></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        {# <a href="{{ url_for('twitter') }}">推特治国</a> #}
-                                        <a href="#">推特治国</a>
-                                    </li>
-                                    <li>
-                                        {# <a href="{{ url_for('iot2012') }}">iot2012</a> #}
-                                        <a href="#">iot2012</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">3</a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="#">4</a>
-                                    </li>
-                                    <li class="divider">
-                                    </li>
-                                    <li>
-                                        <a href="#">5</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                {# <a href="{{ url_for('about_me') }}">关于我</a> #}
-                                <a href="#">关于我</a>
-                            </li>
-                        </ul>
-                        <form class="navbar-form navbar-left" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" />
-                            </div> <button type="submit" class="btn btn-default">搜索</button>
-                        </form>
-                        <ul class="nav navbar-nav navbar-right">
-                            {#
+                            {% endif %}
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他功能<strong
+                                    class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    {# <a href="{{ url_for('twitter') }}">推特治国</a> #}
+                                    <a href="#">推特治国</a>
+                                </li>
+                                <li>
+                                    {# <a href="{{ url_for('iot2012') }}">iot2012</a> #}
+                                    <a href="#">iot2012</a>
+                                </li>
+                                <li>
+                                    <a href="#">3</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="#">4</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a href="#">5</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            {# <a href="{{ url_for('about_me') }}">关于我</a> #}
+                            <a href="#">关于我</a>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control"/>
+                        </div>
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        {#
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                         {% for message in messages %}
@@ -94,77 +96,77 @@
                         {% endif %}
                         {% endwith %}
 						#}
-                            {% if not current_user.is_authenticated %}
+                        {% if not current_user.is_authenticated %}
                             <li>
-                                 <a href="{{ url_for('webBlueprint.login') }}">登录</a>
+                                <a href="{{ url_for('webBlueprint.login') }}">登录</a>
                             </li>
                             <li>
-                                 <a href="{{ url_for('webBlueprint.signup') }}">注册</a>
+                                <a href="{{ url_for('webBlueprint.signup') }}">注册</a>
                             </li>
-                            {% else %}
+                        {% else %}
                             <li>
-                                 <a href="{{ url_for('webBlueprint.index', user_id = current_user.id) }}">个人主页</a>
+                                <a href="{{ url_for('webBlueprint.index', user_id = current_user.id) }}">个人主页</a>
                             </li>
                             <li>
-                                 <a href="{{ url_for('webBlueprint.logout') }}">登出</a>
+                                <a href="{{ url_for('webBlueprint.logout') }}">登出</a>
                             </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </nav>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
 
-                {% for message in get_flashed_messages() %}
+            {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     {{ message }}
                 </div>
-                {% endfor %}
+            {% endfor %}
 
-                {% block content %}{% endblock %}
+            {% block content %}{% endblock %}
 
-            </div>
         </div>
     </div>
+</div>
 
 
-    <div class="main_nav_bottom">
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container" align="center">
-                <style>
-                    .nav-tabs {
-                        text-align: center;
-                        height: 40px;
-                        line-height: 40px;
-                    }
-                </style>
-                <ul class="nav nav-tabs nav-tabs-justified">
-                    <div class="row" align="center">
-                        <div class="col-md-4 col-sm-4 col-xs-4" align="center">
-                            <li>Powerd by: Flask</li>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4" align="center">
-                            <li>
-                                <div class="social-share" data-sites="weibo,qq,qzone,tencent,wechat,facebook,twitter">
-                                </div>
-                            </li>
-                        </div>
-                        <div class="col-md-4 col-sm-4 col-xs-4" align="center">
-                            <li>Email: guo.orm.o@gmail.com</a></li>
-                        </div>
+<div class="main_nav_bottom">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container" align="center">
+            <style>
+                .nav-tabs {
+                    text-align: center;
+                    height: 40px;
+                    line-height: 40px;
+                }
+            </style>
+            <ul class="nav nav-tabs nav-tabs-justified">
+                <div class="row" align="center">
+                    <div class="col-md-4 col-sm-4 col-xs-4" align="center">
+                        <li>Powerd by: Flask</li>
                     </div>
-                </ul>
-            </div>
-        </nav>
-    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" align="center">
+                        <li>
+                            <div class="social-share" data-sites="weibo,qq,qzone,tencent,wechat,facebook,twitter">
+                            </div>
+                        </li>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-4" align="center">
+                        <li>Email: guo.orm.o@gmail.com</a></li>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('webBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
-    <script>
-        $('#share-1').share();
-        $('#share-2').share({ sites: ['qzone', 'qq', 'weibo', 'wechat'] });
-        $('#share-3').share();
-        $('#share-4').share();
-    </script>
+<script src="{{ url_for('webBlueprint.static',filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('webBlueprint.static',filename='js/jquery.share.min.js') }}"></script>
+<script>
+    $('#share-1').share();
+    $('#share-2').share({sites: ['qzone', 'qq', 'weibo', 'wechat']});
+    $('#share-3').share();
+    $('#share-4').share();
+</script>
 
 </body>
 
