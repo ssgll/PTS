@@ -10,7 +10,12 @@ PAGE_COUNT = 15
 def UserInformationView(page=1):
     identifeid = False
     if current_user.is_authenticated:
-        identifeid = db.session.query(UserInformation).filter(UserInformation.id == session["userID"]).one().type
+        identifeid = (
+            db.session.query(UserInformation)
+            .filter(UserInformation.id == session["userID"])
+            .one()
+            .type
+        )
     else:
         identifeid = False
     if identifeid:
@@ -35,8 +40,13 @@ def UserInformationView(page=1):
 def UserCommodityView(page=1):
     identifeid = False
     if current_user.is_authenticated:
-        identifeid = db.session.query(UserInformation).filter(UserInformation.id == session["userID"]).one().type
-        print (current_user.id)
+        identifeid = (
+            db.session.query(UserInformation)
+            .filter(UserInformation.id == session["userID"])
+            .one()
+            .type
+        )
+        print(current_user.id)
     else:
         identifeid = False
     print(identifeid)
@@ -56,4 +66,4 @@ def UserCommodityView(page=1):
             pageCount=pageCount,
         )
     else:
-        return redirect (url_for ("webBlueprint.index"))
+        return redirect(url_for("webBlueprint.index"))

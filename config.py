@@ -43,7 +43,7 @@ class Config:
     SESSION_REDIS = redis.Redis(connection_pool=REDIS_POOL)
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = "session:"
-    PERMANENT_SESSION_LIFETIME = timedelta(minutes=2)
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
 
 
 class Development(Config):
@@ -85,7 +85,7 @@ class Development(Config):
     SESSION_REDIS = redis.Redis(connection_pool=REDIS_POOL)
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = "session:"
-    PERMANENT_SESSION_LIFETIME = timedelta(minutes=2)
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
 
 
 class Production(Config):
