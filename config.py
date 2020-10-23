@@ -45,6 +45,9 @@ class Config:
     SESSION_KEY_PREFIX = "session:"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
 
+    # 定时器
+    CELERY_BROKER_URL = 'redis://:383687@127.0.0.1:6379/1'
+    CELERY_RESULT_BACKEND = 'redis://:383687@127.0.0.1:6379/1'
 
 class Development(Config):
     # 调试信息
@@ -86,6 +89,10 @@ class Development(Config):
     SESSION_USE_SIGNER = False
     SESSION_KEY_PREFIX = "session:"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
+
+    # 定时器
+    CELERY_BROKER_URL = 'redis://:383687@127.0.0.1:6379/1'
+    CELERY_RESULT_BACKEND = 'redis://:383687@127.0.0.1:6379/1'
 
 
 class Production(Config):

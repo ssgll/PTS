@@ -6,6 +6,7 @@ from flask_migrate import Migrate, MigrateCommand
 from models import db, UserInformation, UserCommodity
 from flask_session import Session
 from flask_login import LoginManager
+from celery import Celery
 
 
 # app
@@ -26,9 +27,11 @@ def registerBlueprint(app):
     # 蓝图
     from web.urls import webBlueprint
     from admin.urls import adminBlueprint
+    from proxypool.urls import api_bp
 
     app.register_blueprint(adminBlueprint, url_prefix="/admin")
     app.register_blueprint(webBlueprint, url_prefix="/")
+    app.register_blueprint(api_bp, url_prefix="/proxy")
 
     return app
 
@@ -40,6 +43,10 @@ app = registerBlueprint(app)
 
 # session
 Session(app)
+
+# 定时器
+celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
+celery.conf.update(app.config)
 
 # 登录
 loginManager = LoginManager()

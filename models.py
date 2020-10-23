@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 from flask_sqlalchemy import SQLAlchemy
 from web.generate import GenerateId
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
+import time
 
 db = SQLAlchemy()
 
@@ -95,3 +96,21 @@ class UserCommodity(db.Model):
 
     def __repr__(self):
         return "<userID:{}>\t<commodityName:{}>".format(self.userID, self.commodityName)
+
+
+class Pool(db.Model):
+    __table_name__ = "pool"
+
+    __table_args__ = {
+        "mysql_charset": "utf8",
+        "comment": "代理池",
+    }
+
+    id = db.Column(db.Integer, primary_key=True)
+    get_time = db.Column(db.String(2000), default=None)
+    ip = db.Column(db.String(2000), nullable=False)
+
+    def __init__(self, ip):
+        self.id = GenerateId().next_id()
+        self.ip = ip
+        self.get_time = time.strftime("%m-%d %H:%M:%S")

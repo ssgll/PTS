@@ -142,12 +142,14 @@
             obj_lis[i].ondblclick = function () {
                 {#alert(this.getAttribute("id"));););#}
                 document.getElementById("openMD").click();
+                {#获取当前值#}
                 current_commodityID = this.getElementsByTagName("td")[0].innerText;
                 current_userID = this.getElementsByTagName("td")[1].innerText;
                 current_commodityName = this.getElementsByTagName("td")[2].innerText;
                 current_hopePrice = this.getElementsByTagName("td")[3].innerText;
                 current_status = this.getElementsByTagName("td")[4].innerText;
                 current_remark = this.getElementsByTagName("td")[5].innerText;
+                {#在模态框中显示#}
                 document.getElementById("change_commodityID").value=current_commodityID;
                 document.getElementById("change_userID").value=current_userID;
                 document.getElementById("change_commodityName").value=current_commodityName;
