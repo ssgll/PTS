@@ -8,7 +8,3 @@ class ProxyPoolView(Resource):
     def get(self):
         iplist = db.session.query(Pool).all()
         return iplist
-
-
-
-

@@ -22,21 +22,24 @@ def ip_66():
 
 # 检查代理是否有效
 def proxy_status(ip):
-    user_agent = {"user-agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/86.0.4240.75 "
-        "Safari/537.36 Edg/86.0.622.38 "
-    )}
+    user_agent = {
+        "user-agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/86.0.4240.75 "
+            "Safari/537.36 Edg/86.0.622.38 "
+        )
+    }
     test_url = "https://www.baidu.com/"
     proxie = {"http": ip}
     handler = request.ProxyHandler(proxie)
     openner = request.build_opener(handler)
     try:
         response = request.Request(test_url, headers=user_agent)
-        html = openner.open (response, timeout=5)
+        html = openner.open(response, timeout=5)
         status = html.status
     except:
         status = 0
     return status
+
 
 ip_66()

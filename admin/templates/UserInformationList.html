@@ -74,9 +74,35 @@
 
 
 </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit</h4>
+            </div>
+            <div class="modal-body">
+                userID:<input type="text" class="form-control" id="change_userID" readonly>
+                user name:<input type="text" class="form-control" id="change_userName" >
+                name:<input type="text" class="form-control" id="change_name" >
+                birthDate:<input type="text" class="form-control" id="change_birthDate">
+                telephone:<input type="text" class="form-control" id="change_telephone">
+                email:<input type="text" class="form-control" id="change_email">
+                status:<input type="text" class="form-control" id="change_status">
+                type:<input type="text" class="form-control" id="change_type">
+                remark:<input type="text" class="form-control" id="change_remark" readonly>
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="portainer col-md-offset-5 ">
-    <nav aria-label="Page navigation" >
+    <nav aria-label="Page navigation">
         <ul class="pagination col-md-12">
             {% if page > 1 %}
                 <li>
@@ -87,7 +113,8 @@
             {% endif %}
             {% for foo in range(1,pageCount + 1) %}
                 {% if foo == page %}
-                    <li class="active"><a href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}">{{ foo }}</a></li>
+                    <li class="active"><a href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}">{{ foo }}</a>
+                    </li>
                 {% else %}
                     <li><a href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}">{{ foo }}</a></li>
                 {% endif %}
@@ -104,9 +131,31 @@
     </nav>
 </div>
 
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
-<script src=""></script>
-<!-- 包括所有已编译的插件 -->
-<script src=""></script>
+<!--处理模态框 -->
+<script>
+    window.onload = function () {
+        let obj_lis = document.getElementById("commList").getElementsByTagName("tr");
+        for (let i = 1; i < obj_lis.length; i++) {
+            obj_lis[i].ondblclick = function () {
+                document.getElementById("openMD").click();
+                {#获取当前值#}
+                let current_commodityID = this.getElementsByTagName("td")[0].innerText;
+                let current_userID = this.getElementsByTagName("td")[1].innerText;
+                let current_commodityName = this.getElementsByTagName("td")[2].innerText;
+                let current_hopePrice = this.getElementsByTagName("td")[3].innerText;
+                let current_status = this.getElementsByTagName("td")[4].innerText;
+                let current_remark = this.getElementsByTagName("td")[5].innerText;
+                {#在模态框中显示#}
+                document.getElementById("change_commodityID").value = current_commodityID;
+                document.getElementById("change_userID").value = current_userID;
+                document.getElementById("change_commodityName").value = current_commodityName;
+                document.getElementById("change_hopePrice").value = current_hopePrice;
+                document.getElementById("change_status").value = current_status;
+                document.getElementById("change_remark").value = current_remark;
+            }
+
+        }
+    }
+</script>
 </body>
 </html>

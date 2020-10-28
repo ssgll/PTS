@@ -8,17 +8,16 @@ PAGE_COUNT = 15
 
 
 def UserInformationView(page=1):
-    identifeid = False
     if current_user.is_authenticated:
-        identifeid = (
+        identified = (
             db.session.query(UserInformation)
             .filter(UserInformation.id == session["userID"])
             .one()
             .type
         )
     else:
-        identifeid = False
-    if identifeid:
+        identified = False
+    if identified:
         global PAGE_COUNT
         UserInformationList = (
             db.session.query(UserInformation)
@@ -38,9 +37,8 @@ def UserInformationView(page=1):
 
 
 def UserCommodityView(page=1):
-    identifeid = False
     if current_user.is_authenticated:
-        identifeid = (
+        identified = (
             db.session.query(UserInformation)
             .filter(UserInformation.id == session["userID"])
             .one()
@@ -48,9 +46,9 @@ def UserCommodityView(page=1):
         )
         print(current_user.id)
     else:
-        identifeid = False
-    print(identifeid)
-    if identifeid:
+        identified = False
+    print(identified)
+    if identified:
         global PAGE_COUNT
         UserCommodityList = (
             db.session.query(UserCommodity)
