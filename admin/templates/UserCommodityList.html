@@ -36,6 +36,7 @@
         <li role="presentation"><a href="{{ url_for('adminBlueprint.Userinformation',page=1) }}">UserInformation</a>
         </li>
         <li role="presentation" class="active"><a href="#">UserCommodity</a></li>
+        <li role="presentation"><a href="{{ url_for('webBlueprint.index') }}">返回主页</a></li>
     </ul>
     <div class="di"></div>
     <div class="portainer col-md-10 col-md-offset-1">
@@ -60,16 +61,18 @@
                     <td>{{ comm.userID }}</td>
                     <td>{{ comm.commodityName }}</td>
                     <td>{{ comm.hopePrice }}</td>
-                    <td>
-                        {% if comm.status == '0000' %}
-                            有效
-                        {% elif comm.status == '0001' %}
-                            无效
-                        {% elif comm.status == '0010' %}
-                            中止
-                        {% else %}
-                            删除
-                        {% endif %}
+                    <td data="{{ comm.status }}">
+                        <div >
+                            {% if comm.status == '0000' %}
+                                有效
+                            {% elif comm.status == '0001' %}
+                                无效
+                            {% elif comm.status == '0010' %}
+                                中止
+                            {% else %}
+                                删除
+                            {% endif %}
+                        </div>
                     </td>
                     <td>{{ comm.remark }}</td>
                 </tr>
@@ -88,13 +91,21 @@
                         userID:<input type="text" class="form-control" id="change_userID" readonly>
                         commodityName:<input type="text" class="form-control" id="change_commodityName">
                         hopePrice:<input type="text" class="form-control" id="change_hopePrice">
-                        status:<input type="text" class="form-control" id="change_status">
+                        <div class="form-group">
+                            <label for="name">status:</label>
+                            <select class="form-control" id="change_status">
+                                <option value="0000">有效</option>
+                                <option value="0001">无效</option>
+                                <option value="0010">中止</option>
+                                <option value="0011">删除</option>
+                            </select>
+                        </div>
                         remark:<input type="text" class="form-control" id="change_remark">
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="save">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -135,33 +146,39 @@
     </nav>
 </div>
 
-<!--处理模态框 -->
-<script>
-    window.onload = function () {
-        let obj_lis = document.getElementById("commList").getElementsByTagName("tr");
-        for (let i = 1; i < obj_lis.length; i++) {
-            obj_lis[i].ondblclick = function () {
-                document.getElementById("openMD").click();
-                {#获取当前值#}
-                let current_commodityID = this.getElementsByTagName("td")[0].innerText;
-                let current_userID = this.getElementsByTagName("td")[1].innerText;
-                let current_commodityName = this.getElementsByTagName("td")[2].innerText;
-                let current_hopePrice = this.getElementsByTagName("td")[3].innerText;
-                let current_status = this.getElementsByTagName("td")[4].innerText;
-                let current_remark = this.getElementsByTagName("td")[5].innerText;
-                {#在模态框中显示#}
-                document.getElementById("change_commodityID").value = current_commodityID;
-                document.getElementById("change_userID").value = current_userID;
-                document.getElementById("change_commodityName").value = current_commodityName;
-                document.getElementById("change_hopePrice").value = current_hopePrice;
-                document.getElementById("change_status").value = current_status;
-                document.getElementById("change_remark").value = current_remark;
-            }
 
+<!-- modal -->
+<script>
+    let subData = null;
+    let obj_lis = document.getElementById("commList").getElementsByTagName("tr");
+    for (let i = 1; i < obj_lis.length; i++) {
+        obj_lis[i].ondblclick = function () {
+            document.getElementById("openMD").click();
+            let current_commodityID = this.getElementsByTagName("td")[0].innerText;
+            let current_userID = this.getElementsByTagName("td")[1].innerText;
+            let current_commodityName = this.getElementsByTagName("td")[2].innerText;
+            let current_hopePrice = this.getElementsByTagName("td")[3].innerText;
+            let current_status = this.getElementsByTagName("td")[4].getAttribute("data");
+            let current_remark = this.getElementsByTagName("td")[5].innerText;
+            document.getElementById("change_commodityID").value = current_commodityID;
+            document.getElementById("change_userID").value = current_userID;
+            document.getElementById("change_commodityName").value = current_commodityName;
+            document.getElementById("change_hopePrice").value = current_hopePrice;
+            document.getElementById("change_status").value = current_status;
+            document.getElementById("change_remark").value = current_remark;
+            subData = {
+                "commodityID": current_commodityID,
+                "change_userID": current_userID,
+                "change_commodityName": $("#change_commodityName").val(),
+                "change_hopePrice": $("#change_hopePrice").val(),
+                "change_status": $("#change_status").val(),
+                "change_remark": $("#change_remark").val()
+            }
+            console.log(current_status);
+            console.log(subData)
         }
     }
 </script>
-<!-- 包括所有已编译的插件 -->
-<script src=""></script>
+
 </body>
 </html>

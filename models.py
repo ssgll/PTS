@@ -19,16 +19,16 @@ class UserInformation(db.Model, UserMixin):
 
     id = db.Column(db.String(50), primary_key=True, index=True, comment="用户唯一标识符")
     userName = db.Column(db.String(2000), nullable=False, comment="用户名")
-    name = db.Column(db.String(2000), comment="用户姓名")
-    birthDate = db.Column(db.String(2000), comment="出生日期")
-    telephone = db.Column(db.String(2000), comment="电话号码")
-    email = db.Column(db.String(2000), comment="Email")
+    name = db.Column(db.String(2000), default=" ",comment="用户姓名")
+    birthDate = db.Column(db.String(2000), default=" ", comment="出生日期")
+    telephone = db.Column(db.String(2000), default=" ", comment="电话号码")
+    email = db.Column(db.String(2000), default=" ", comment="Email")
     passwordHash = db.Column(db.String(2000), comment="密码哈希值（不直接保存明文密码）")
     status = db.Column(
         db.String(2000), default="0000", comment="用户状态 0000激活 0001未激活 0010禁用"
     )
     type = db.Column(db.Boolean, default=False, comment="用户类型 True管理员 False普通用户")
-    remark = db.Column(db.String(2000), comment="备注")
+    remark = db.Column(db.String(2000), default=" ", comment="备注")
 
     # 禁止直接访问明文密码
     @property
@@ -78,14 +78,14 @@ class UserCommodity(db.Model):
         db.String(50), primary_key=True, index=True, comment="商品唯一标识符"
     )
     userID = db.Column(
-        db.String(50), db.ForeignKey("user_information.id"), comment="用户唯一标识符"
+        db.String(50), db.ForeignKey("user_information.id"),  default=" ",comment="用户唯一标识符"
     )
-    commodityName = db.Column(db.String(2000), comment="商品名称")
-    hopePrice = db.Column(db.String(2000), comment="期望价格")
+    commodityName = db.Column(db.String(2000), default=" ", comment="商品名称")
+    hopePrice = db.Column(db.String(2000), default=" ", comment="期望价格")
     status = db.Column(
         db.String(50), default="0000", comment="商品状态 0000有效 0001无效 0010中止 0011删除"
     )
-    remark = db.Column(db.String(2000), comment="备注")
+    remark = db.Column(db.String(2000),  default=" ",comment="备注")
 
     user_fk = db.relationship("UserInformation", backref=db.backref("usercommoditys"))
 
