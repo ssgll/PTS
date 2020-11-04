@@ -23,7 +23,7 @@ class Config:
     )
     SQLALCHEMY_COMMIT_ON_TEARDOWN = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
     # 根目录 模板 静态文件
     BASE_DIR = os.getcwd()

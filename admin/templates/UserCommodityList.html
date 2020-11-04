@@ -62,7 +62,7 @@
                     <td>{{ comm.commodityName }}</td>
                     <td>{{ comm.hopePrice }}</td>
                     <td data="{{ comm.status }}">
-                        <div >
+                        <div>
                             {% if comm.status == '0000' %}
                                 有效
                             {% elif comm.status == '0001' %}
@@ -105,7 +105,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="save">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="save" data-dismiss="modal">Save changes
+                        </button>
                     </div>
                 </div>
             </div>
@@ -128,7 +129,7 @@
             {% endif %}
             {% for foo in range(1,pageCount + 1) %}
                 {% if foo == page %}
-                    <li class="active"><a href="{{ url_for('adminBlueprint.UserCommodity', page=foo) }}">{{ foo }}</a>
+                    <li class="active"><a href="{{ url_for('adminBlueprint.UserCommodity', page=foo) }}" id="now_page">{{ foo }}</a>
                     </li>
                 {% else %}
                     <li><a href="{{ url_for('adminBlueprint.UserCommodity', page=foo) }}">{{ foo }}</a></li>
@@ -149,7 +150,6 @@
 
 <!-- modal -->
 <script>
-    let subData = null;
     let obj_lis = document.getElementById("commList").getElementsByTagName("tr");
     for (let i = 1; i < obj_lis.length; i++) {
         obj_lis[i].ondblclick = function () {
@@ -166,18 +166,30 @@
             document.getElementById("change_hopePrice").value = current_hopePrice;
             document.getElementById("change_status").value = current_status;
             document.getElementById("change_remark").value = current_remark;
-            subData = {
-                "commodityID": current_commodityID,
-                "change_userID": current_userID,
-                "change_commodityName": $("#change_commodityName").val(),
-                "change_hopePrice": $("#change_hopePrice").val(),
-                "change_status": $("#change_status").val(),
-                "change_remark": $("#change_remark").val()
-            }
-            console.log(current_status);
-            console.log(subData)
         }
     }
+    $("#save").click(() => {
+        let subData = {
+            "commodityID": $("#change_commodityID").val(),
+            "userID": $("#change_userID").val(),
+            "commodityName": $("#change_commodityName").val(),
+            "hopePrice": $("#change_hopePrice").val(),
+            "status": $("#change_status").val(),
+            "remark": $("#change_remark").val(),
+            "now_page":$("#now_page").text(),
+        }
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(subData),
+            url: "{{ url_for('adminBlueprint.commUpdate') }}",
+            success: (data, status) => {
+
+            }
+        });
+        window.location.reload();
+    })
 </script>
 
 </body>

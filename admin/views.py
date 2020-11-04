@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from models import db, UserInformation, UserCommodity
-from flask import render_template, redirect, url_for, session
+from flask import render_template, redirect, url_for, session, request, jsonify
 from math import ceil
 from flask_login import current_user
 
@@ -44,10 +44,8 @@ def UserCommodityView(page=1):
             .one()
             .type
         )
-        print(current_user.id)
     else:
         identified = False
-    print(identified)
     if identified:
         global PAGE_COUNT
         UserCommodityList = (
@@ -65,3 +63,30 @@ def UserCommodityView(page=1):
         )
     else:
         return redirect(url_for("webBlueprint.index"))
+
+
+def commUpdate():
+    try:
+        data = request.get_json()
+        commodityID = data["commodityID"]
+        userID = data["userID"]
+        commodityName = data["commodityName"]
+        hopePrice = data["hopePrice"]
+        status = data["status"]
+        remark = data["remark"]
+        nowPage = data["now_page"]
+        commodity = UserCommodity(userID=userID, commodityName=commodityName)
+        commodity.hopePrice = hopePrice
+        commodity.status = status
+        commodity.remark = remark
+        del data["userID"]
+        del data["now_page"]
+        db.session.query(UserCommodity).filter(
+            UserCommodity.commodityID == commodityID
+        ).update(data)
+        db.session.commit()
+        return redirect(url_for("adminBlueprint.UserCommodity", page=nowPage))
+        msg = {"msg":"200"}
+        return jsonify(msg),200
+    except Exception as e:
+        return {"message": "error!"}, 404

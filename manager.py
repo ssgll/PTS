@@ -7,12 +7,14 @@ from models import db, UserInformation, UserCommodity
 from flask_session import Session
 from flask_login import LoginManager
 from celery import Celery
+from flask_cors import CORS
 
 
 # app
 def createApp():
     app = Flask(__name__)
     app.config.from_object(config["Default"])
+    CORS(app)
     return app
 
 

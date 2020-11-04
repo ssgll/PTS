@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from admin import adminBlueprint
-from admin.views import UserInformationView, UserCommodityView
+from admin.views import UserInformationView, UserCommodityView, commUpdate
 
 adminBlueprint.add_url_rule(
     "/<int:page>",
@@ -21,4 +21,13 @@ adminBlueprint.add_url_rule(
     endpoint="UserCommodity",
     view_func=UserCommodityView,
     methods=["POST", "GET"],
+)
+
+adminBlueprint.add_url_rule(
+    rule="/commUpdate",
+    endpoint="commUpdate",
+    view_func=commUpdate,
+    methods=[
+        "POST",
+    ],
 )
