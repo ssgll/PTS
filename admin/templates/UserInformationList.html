@@ -65,7 +65,7 @@
                     <td>{{ user.birthDate }}</td>
                     <td>{{ user.telephone }}</td>
                     <td>{{ user.email }}</td>
-                    <td>
+                    <td data={{ user.status }}>
                         {% if user.status == '0000' %}
                             激活
                         {% elif user.status == '0001' %}
@@ -108,7 +108,7 @@
 
                 <div class="form-group">
                     <label for="name">status:</label>
-                    <select class="form-control">
+                    <select class="form-control" id="change_status">
                         <option value="0000">激活</option>
                         <option value="0001">未激活</option>
                         <option value="0002">禁用</option>
@@ -126,7 +126,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="save">Save changes</button>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
             {% for foo in range(1,pageCount + 1) %}
                 {% if foo == page %}
                     <li class="active"><a
-                            href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}">{{ foo }}</a>
+                            href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}" id="now_page">{{ foo }}</a>
                     </li>
                 {% else %}
                     <li><a href="{{ url_for('adminBlueprint.Userinformation', page=foo) }}">{{ foo }}</a></li>
@@ -162,6 +162,60 @@
     </nav>
 </div>
 
-<script src="{{ url_for('adminBlueprint.static',filename='js/modal.js') }}"></script>
+<!-- <script src="{{ url_for('adminBlueprint.static',filename='js/modal.js') }}"></script> -->
+<script type="text/javascript">
+$(() => {
+    let obj_list = $("#userList tr:gt(0)");
+    $.each(obj_list, (index, item) => {
+        $(item).dblclick(() => {
+            $("#openMD").click();
+            let current_userID = $($(item).children("td").get(0)).text();
+            let current_userName = $($(item).children("td").get(1)).text();
+            let current_name = $($(item).children("td").get(2)).text();
+            let current_birthDate = $($(item).children("td").get(3)).text();
+            let current_telephone = $($(item).children("td").get(4)).text();
+            let current_email = $($(item).children("td").get(5)).text();
+            let current_status = $($(item).children("td").get(6)).attr("data");
+            let current_type = $($(item).children("td").get(7)).text();
+            let current_remark = $($(item).children("td").get(8)).text();
+            $("#change_userID").val(current_userID);
+            $("#change_userName").val(current_userName);
+            $("#change_name").val(current_name);
+            $("#change_birthDate").val(current_birthDate);
+            $("#change_telephone").val(current_telephone);
+            $("#change_email").val(current_email);
+            $("#change_status").val(current_status);
+            $("#change_type").val(current_type);
+            $("#change_remark").val(current_remark);
+        })
+    });
+$("#save").click(()=>{
+  let subData = {
+    "userID": $("#change_userID").val(),
+    "userName": $("#change_userName").val(),
+    "name": $("#change_name").val(),
+    "birthDate": $("#change_birthDate").val(),
+    "telephone": $("#change_telephone").val(),
+    "email": $("#change_email").val(),
+    "status": $("#change_status").val(),
+    "type": $("#change_type").val(),
+    "remark": $("#change_remark").val(),
+    "now_page" : $("#now_page").text()
+  }
+  console.log(subData)
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    contentType: 'application/json;charset=UTF-8',
+    data: JSON.stringify(subData),
+    url: "{{ url_for('adminBlueprint.userUpdate') }}",
+    success: (data, status) => {
+
+    }
+  })
+
+});
+})
+</script>
 </body>
 </html>

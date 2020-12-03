@@ -90,3 +90,28 @@ def commUpdate():
         return jsonify(msg),200
     except Exception as e:
         return {"message": "error!"}, 404
+
+def userUpdate():
+    try:
+        data = request.get_json()
+        userID = data["userID"]
+        userName = data["userName"]
+        name = data["name"]
+        birthDate = data["birthDate"]
+        telephone = data["telephone"]
+        email = data["email"]
+        status = data["status"]
+        type = data["type"]
+        remark = data["remark"]
+        nowPage = data["now_page"]
+        del data["userID"]
+        del data["now_page"]
+        user = db.session.query(UserInformation).filter(
+            UserInformation.id == userID
+        ).update(data)
+        db.session.commit()
+        return redirect(url_for("adminBlueprint.Userinformation", page=nowPage))
+        msg = {"message":"200"}
+        return jsonify(msg),200
+    except Exception as e:
+        return {"message": "error!"}, 404
