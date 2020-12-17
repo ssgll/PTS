@@ -16,9 +16,11 @@ def createApp():
     CORS(app)
     return app
 
+
 # 调度器
 def oneJob():
     print(1)
+
 
 def migrateApp(app, db):
     # 数据库配置
@@ -38,9 +40,9 @@ def registerBlueprint(app):
     app.register_blueprint(api_bp, url_prefix="/proxy")
 
     # 调度器
-    sche = BackgroundScheduler()
-    sche.add_job(oneJob, trigger="interval",seconds=5)
-    sche.start()
+    # sche = BackgroundScheduler()
+    # sche.add_job(oneJob, trigger="interval",seconds=5)
+    # sche.start()
     return app
 
 
@@ -60,11 +62,6 @@ Session(app)
 loginManager = LoginManager()
 loginManager.init_app(app=app)
 loginManager.login_view = "webBlueprint.index"
-
-
-
-
-
 
 # 获取登录用户
 @loginManager.user_loader

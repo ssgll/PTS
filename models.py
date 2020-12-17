@@ -46,7 +46,7 @@ class UserInformation(db.Model, UserMixin):
         self.userName = userName
         self.password = password
         self.email = email
-        self.id = str(uuid.uuid4()).replace("-","")
+        self.id = str(uuid.uuid4()).replace("-", "")
 
     # 没啥用，就为了实例化好看
     def __repr__(self):

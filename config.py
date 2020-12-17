@@ -48,14 +48,15 @@ class Config:
     # 调度器
     JOBS = [
         {
-            "id":"one",
-            "func":"__main__:oneJob",
-            "trigger":"interval",
+            "id": "one",
+            "func": "__main__:oneJob",
+            "trigger": "interval",
             # "hour":15,
             # "minute":00
-            "seconds":5
+            "seconds": 5,
         }
     ]
+
 
 class Development(Config):
     # 调试信息
@@ -101,12 +102,12 @@ class Development(Config):
     # 调度器
     JOBS = [
         {
-            "id":"one",
-            "func":"oneJob",
-            "trigger":"interval",
+            "id": "one",
+            "func": "oneJob",
+            "trigger": "interval",
             # "hour":15,
             # "minute":00
-            "seconds":3
+            "seconds": 3,
         }
     ]
 

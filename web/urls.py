@@ -10,7 +10,8 @@ from web.views import (
     addMonitorView,
     logoutView,
     monitorChange,
-    commChange
+    commChange,
+    userInformationChange,
 )
 
 # index
@@ -49,13 +50,27 @@ webBlueprint.add_url_rule(
     "/logout", endpoint="logout", view_func=logoutView, methods=["POST", "GET"]
 )
 
-# logout
+# 商品状态
 webBlueprint.add_url_rule(
-    "/monitorChange/<commodityID>/<status>", endpoint="monitorChange", view_func=monitorChange, methods=["POST", "GET"]
+    "/monitorChange/<commodityID>/<status>",
+    endpoint="monitorChange",
+    view_func=monitorChange,
+    methods=["POST", "GET"],
+)
+# 删除商品
+webBlueprint.add_url_rule(
+    "/commChange/<commodityID>",
+    endpoint="commChange",
+    view_func=commChange,
+    methods=["POST", "GET"],
 )
 
+# 用户信息修改
 webBlueprint.add_url_rule(
-    "/commChange/<commodityID>", endpoint="commChange", view_func=commChange, methods=["POST", "GET"]
+    "/userInformationChange",
+    endpoint="userInformationChange",
+    view_func=userInformationChange,
+    methods=["POST", "GET"],
 )
 # webBlueprint.add_url_rule("/about-me", "aboutme", about_me, methods=["POST", "GET"])
 # webBlueprint.add_url_rule("/iot2012", "iot2012", iot2012, methods=["POST", "GET"])

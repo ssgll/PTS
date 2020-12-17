@@ -118,7 +118,7 @@ def addMonitorView():
         user_id = current_user.id
         count = len(
             db.session.query(UserCommodity)
-            .filter(UserCommodity.userID == user_id, UserCommodity.status == '0000')
+            .filter(UserCommodity.userID == user_id, UserCommodity.status == "0000")
             .all()
         )
         if count >= 10:
@@ -135,32 +135,47 @@ def addMonitorView():
                 return redirect(url_for("webBlueprint.addmonitor", form=form))
     return render_template("add_commodity.html", form=form)
 
+
 # 状态改变
 @login_required
 def monitorChange(commodityID, status):
     count = len(
         db.session.query(UserCommodity)
-        .filter(UserCommodity.userID == current_user.id, UserCommodity.status == '0000')
+        .filter(UserCommodity.userID == current_user.id, UserCommodity.status == "0000")
         .all()
     )
     if count >= 10:
         flash("最多添加10条有效记录,请重试")
         return redirect(url_for("webBlueprint.monitor"))
-    elif status == '0000' or status == '0010':
-        status = '0000' if status == '0010' else '0010'
+    elif status == "0000" or status == "0010":
+        status = "0000" if status == "0010" else "0010"
         try:
-            db.session.query(UserCommodity).filter(UserCommodity.userID == current_user.id, UserCommodity.commodityID == commodityID).update({"status":status})
+            db.session.query(UserCommodity).filter(
+                UserCommodity.userID == current_user.id,
+                UserCommodity.commodityID == commodityID,
+            ).update({"status": status})
             db.session.commit()
             return redirect(url_for("webBlueprint.monitor"))
         except Exception as e:
-            return {"msg":"error!"},404
+            return {"msg": "error!"}, 404
+
 
 # 删除
 @login_required
 def commChange(commodityID):
     try:
-        db.session.query(UserCommodity).filter(UserCommodity.userID == current_user.id, UserCommodity.commodityID==commodityID).delete()
+        db.session.query(UserCommodity).filter(
+            UserCommodity.userID == current_user.id,
+            UserCommodity.commodityID == commodityID,
+        ).delete()
         db.session.commit()
         return redirect(url_for("webBlueprint.monitor"))
     except Exception as e:
-        return {"msg":"error!"},404
+        return {"msg": "error!"}, 404
+
+
+# 用户信息修改
+@login_required
+def userInformationChange():
+    User = db.session.query(UserInformation.id == current_user.id).first()
+    return render_template("usreInformationChange.html")

@@ -6,7 +6,7 @@ gevent.monkey.patch_all()
 
 import multiprocessing
 
-chdir = "/root/pts"
+chdir = os.getcwd()
 debug = True
 loglevel = "info"
 bind = "0.0.0.0:80"

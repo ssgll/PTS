@@ -8,15 +8,12 @@ PAGE_COUNT = 15
 
 
 def UserInformationView(page=1):
-    if current_user.is_authenticated:
-        identified = (
-            db.session.query(UserInformation)
-            .filter(UserInformation.id == session["userID"])
-            .one()
-            .type
-        )
-    else:
-        identified = False
+    identified = (
+        db.session.query(UserInformation)
+        .filter(UserInformation.id == current_user.id,UserInformation.status=='0000')
+        .one()
+        .type
+    )
     if identified:
         global PAGE_COUNT
         UserInformationList = (
@@ -33,7 +30,7 @@ def UserInformationView(page=1):
             UserInformationList=UserInformationList,
         )
     else:
-        return redirect(url_for("webBlueprint.index"))
+        return redirect(url_for("webBlueprint.userInformationChange"))
 
 
 def UserCommodityView(page=1):
@@ -44,9 +41,7 @@ def UserCommodityView(page=1):
             .one()
             .type
         )
-    else:
-        identified = False
-    if identified:
+    if identified == 1:
         global PAGE_COUNT
         UserCommodityList = (
             db.session.query(UserCommodity)
@@ -61,8 +56,10 @@ def UserCommodityView(page=1):
             UserCommodityList=UserCommodityList,
             pageCount=pageCount,
         )
-    else:
-        return redirect(url_for("webBlueprint.index"))
+    elif identified == 0:
+        return redirect(
+            url_for("webBlueprint.userInformationChange", userID=current_user.id)
+        )
 
 
 def commUpdate():
@@ -86,25 +83,28 @@ def commUpdate():
         ).update(data)
         db.session.commit()
         return redirect(url_for("adminBlueprint.UserCommodity", page=nowPage))
-        msg = {"msg":"200"}
-        return jsonify(msg),200
+        msg = {"msg": "200"}
+        return jsonify(msg), 200
     except Exception as e:
         return {"message": "error!"}, 404
+
 
 def userUpdate():
     try:
         data = request.get_json()
         userID = data["userID"]
-        data["type"] = True if data["type"] == 'true' else False
+        data["type"] = True if data["type"] == "true" else False
         nowPage = data["now_page"]
         del data["userID"]
         del data["now_page"]
-        user = db.session.query(UserInformation).filter(
-            UserInformation.id == userID
-        ).update(data)
+        user = (
+            db.session.query(UserInformation)
+            .filter(UserInformation.id == userID)
+            .update(data)
+        )
         db.session.commit()
         return redirect(url_for("adminBlueprint.Userinformation", page=nowPage))
-        msg = {"message":"200"}
-        return jsonify(msg),200
+        msg = {"message": "200"}
+        return jsonify(msg), 200
     except Exception as e:
         return {"message": "error!"}, 404
