@@ -11,7 +11,7 @@
     <div class="btn-group">
         <a class="btn btn-info" href="{{ url_for('webBlueprint.addmonitor', user_id = current_user.id) }}">添加监控商品</a>
     </div>
-    <table class="table">
+    <table class="table" id="commodityList">
         <thead>
         <tr>
             <th>
@@ -51,7 +51,7 @@
                     <td>
                         {{ commodity.remark }}
                     </td>
-                    <td>
+                    <td data="{{commodity.status}}" id='status'>
                         {% if commodity.status == '0000' %}
                             有效
                         {% elif commodity.status == '0001' %}
@@ -63,11 +63,15 @@
                         {% endif %}
                     </td>
                     <td>
-                        <div class="btn btn-default">
+                        <a class="btn btn-default" id="change_status" href="{{ url_for('webBlueprint.monitorChange',commodityID = commodity.commodityID,status=commodity.status) }}">
                             切换
-                        </div>
+                        </a>
                     </td>
-
+                    <td>
+                      <a class="btn btn-warning" id="delete" href="{{ url_for('webBlueprint.commChange',commodityID = commodity.commodityID) }}">
+                          删除
+                      </a>
+                    </td>
                 </tr>
             {% endfor %}
 

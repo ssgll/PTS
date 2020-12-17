@@ -118,11 +118,11 @@ def addMonitorView():
         user_id = current_user.id
         count = len(
             db.session.query(UserCommodity)
-            .filter(UserCommodity.userID == user_id)
+            .filter(UserCommodity.userID == user_id, UserCommodity.status == '0000')
             .all()
         )
         if count >= 10:
-            flash("最多添加10条记录,请重试")
+            flash("最多添加10条有效记录,请重试")
         else:
             commodity = UserCommodity(userID=user_id, commodityName=commodityName)
             commodity.hopePrice = hopePrice
@@ -134,3 +134,33 @@ def addMonitorView():
                 flash("服务器错误，请重试")
                 return redirect(url_for("webBlueprint.addmonitor", form=form))
     return render_template("add_commodity.html", form=form)
+
+# 状态改变
+@login_required
+def monitorChange(commodityID, status):
+    count = len(
+        db.session.query(UserCommodity)
+        .filter(UserCommodity.userID == current_user.id, UserCommodity.status == '0000')
+        .all()
+    )
+    if count >= 10:
+        flash("最多添加10条有效记录,请重试")
+        return redirect(url_for("webBlueprint.monitor"))
+    elif status == '0000' or status == '0010':
+        status = '0000' if status == '0010' else '0010'
+        try:
+            db.session.query(UserCommodity).filter(UserCommodity.userID == current_user.id, UserCommodity.commodityID == commodityID).update({"status":status})
+            db.session.commit()
+            return redirect(url_for("webBlueprint.monitor"))
+        except Exception as e:
+            return {"msg":"error!"},404
+
+# 删除
+@login_required
+def commChange(commodityID):
+    try:
+        db.session.query(UserCommodity).filter(UserCommodity.userID == current_user.id, UserCommodity.commodityID==commodityID).delete()
+        db.session.commit()
+        return redirect(url_for("webBlueprint.monitor"))
+    except Exception as e:
+        return {"msg":"error!"},404

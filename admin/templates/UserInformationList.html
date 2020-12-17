@@ -74,7 +74,7 @@
                             禁用
                         {% endif %}
                     </td>
-                    <td>
+                    <td data="{{"true" if user.type else "false"}}">
                         {% if user.type == True %}
                             管理员
                         {% else %}
@@ -121,7 +121,7 @@
                         <option value=false>普通用户</option>
                     </select>
                 </div>
-                remark:<input type="text" class="form-control" id="change_remark" readonly>
+                remark:<input type="text" class="form-control" id="change_remark">
 
             </div>
             <div class="modal-footer">
@@ -176,7 +176,7 @@ $(() => {
             let current_telephone = $($(item).children("td").get(4)).text();
             let current_email = $($(item).children("td").get(5)).text();
             let current_status = $($(item).children("td").get(6)).attr("data");
-            let current_type = $($(item).children("td").get(7)).text();
+            let current_type = $($(item).children("td").get(7)).attr("data");
             let current_remark = $($(item).children("td").get(8)).text();
             $("#change_userID").val(current_userID);
             $("#change_userName").val(current_userName);
@@ -202,7 +202,6 @@ $("#save").click(()=>{
     "remark": $("#change_remark").val(),
     "now_page" : $("#now_page").text()
   }
-  console.log(subData)
   $.ajax({
     type: "post",
     dataType: "json",
@@ -212,8 +211,8 @@ $("#save").click(()=>{
     success: (data, status) => {
 
     }
-  })
-
+  });
+  window.location.reload();
 });
 })
 </script>

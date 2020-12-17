@@ -59,7 +59,7 @@ loginManager.login_view = "webBlueprint.index"
 # 获取登录用户
 @loginManager.user_loader
 def load_user(user_id):
-    return UserInformation.query.get(int(user_id))
+    return UserInformation.query.get(user_id)
 
 
 # 初始化admin

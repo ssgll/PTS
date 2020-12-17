@@ -95,14 +95,7 @@ def userUpdate():
     try:
         data = request.get_json()
         userID = data["userID"]
-        userName = data["userName"]
-        name = data["name"]
-        birthDate = data["birthDate"]
-        telephone = data["telephone"]
-        email = data["email"]
-        status = data["status"]
-        type = data["type"]
-        remark = data["remark"]
+        data["type"] = True if data["type"] == 'true' else False
         nowPage = data["now_page"]
         del data["userID"]
         del data["now_page"]

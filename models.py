@@ -4,6 +4,7 @@ from web.generate import GenerateId
 from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
 import time
+import uuid
 
 db = SQLAlchemy()
 
@@ -45,7 +46,7 @@ class UserInformation(db.Model, UserMixin):
         self.userName = userName
         self.password = password
         self.email = email
-        self.id = GenerateId().next_id()
+        self.id = str(uuid.uuid4()).replace("-","")
 
     # 没啥用，就为了实例化好看
     def __repr__(self):
