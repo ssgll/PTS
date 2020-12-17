@@ -45,10 +45,17 @@ class Config:
     SESSION_KEY_PREFIX = "session:"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
 
-    # 定时器
-    CELERY_BROKER_URL = "redis://:383687@127.0.0.1:6379/1"
-    CELERY_RESULT_BACKEND = "redis://:383687@127.0.0.1:6379/1"
-
+    # 调度器
+    JOBS = [
+        {
+            "id":"one",
+            "func":"__main__:oneJob",
+            "trigger":"interval",
+            # "hour":15,
+            # "minute":00
+            "seconds":5
+        }
+    ]
 
 class Development(Config):
     # 调试信息
@@ -91,9 +98,17 @@ class Development(Config):
     SESSION_KEY_PREFIX = "session:"
     PERMANENT_SESSION_LIFETIME = timedelta(minutes=10)
 
-    # 定时器
-    CELERY_BROKER_URL = "redis://:383687@127.0.0.1:6379/1"
-    CELERY_RESULT_BACKEND = "redis://:383687@127.0.0.1:6379/1"
+    # 调度器
+    JOBS = [
+        {
+            "id":"one",
+            "func":"oneJob",
+            "trigger":"interval",
+            # "hour":15,
+            # "minute":00
+            "seconds":3
+        }
+    ]
 
 
 class Production(Config):

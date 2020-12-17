@@ -6,9 +6,8 @@ from flask_migrate import Migrate, MigrateCommand
 from models import db, UserInformation, UserCommodity
 from flask_session import Session
 from flask_login import LoginManager
-from celery import Celery
 from flask_cors import CORS
-
+from apscheduler.schedulers.background import BackgroundScheduler
 
 # app
 def createApp():
@@ -17,6 +16,9 @@ def createApp():
     CORS(app)
     return app
 
+# 调度器
+def oneJob():
+    print(1)
 
 def migrateApp(app, db):
     # 数据库配置
@@ -35,6 +37,10 @@ def registerBlueprint(app):
     app.register_blueprint(webBlueprint, url_prefix="/")
     app.register_blueprint(api_bp, url_prefix="/proxy")
 
+    # 调度器
+    sche = BackgroundScheduler()
+    sche.add_job(oneJob, trigger="interval",seconds=5)
+    sche.start()
     return app
 
 
@@ -47,13 +53,17 @@ app = registerBlueprint(app)
 Session(app)
 
 # 定时器
-celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
-celery.conf.update(app.config)
+# celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
+# celery.conf.update(app.config)
 
 # 登录
 loginManager = LoginManager()
 loginManager.init_app(app=app)
 loginManager.login_view = "webBlueprint.index"
+
+
+
+
 
 
 # 获取登录用户
