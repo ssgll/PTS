@@ -11,21 +11,24 @@ def UserInformationView(page=1):
     try:
         identified = (
             db.session.query(UserInformation)
-            .filter(UserInformation.id == current_user.id,UserInformation.status=='0000')
+            .filter(
+                UserInformation.id == current_user.id, UserInformation.status == "0000"
+            )
             .one()
             .type
         )
     except Exception as e:
-        identified = False    
+        identified = False
     if identified:
         global PAGE_COUNT
         UserInformationList = (
             db.session.query(UserInformation)
+            .filter(UserInformation.userName != 'admin')
             .offset((page - 1) * PAGE_COUNT)
             .limit(PAGE_COUNT)
             .all()
         )
-        pageCount = ceil(len(db.session.query(UserInformation).all()) / PAGE_COUNT)
+        pageCount = ceil(len(db.session.query(UserInformation).filter(UserInformation.userName != 'admin').all()) / PAGE_COUNT)
         return render_template(
             "UserInformationList.html",
             page=page,
@@ -37,14 +40,18 @@ def UserInformationView(page=1):
 
 
 def UserCommodityView(page=1):
-    if current_user.is_authenticated:
+    try:
         identified = (
             db.session.query(UserInformation)
-            .filter(UserInformation.id == session["userID"])
+            .filter(
+                UserInformation.id == current_user.id, UserInformation.status == "0000"
+            )
             .one()
             .type
         )
-    if identified == 1:
+    except Exception as e:
+        identified = False
+    if identified:
         global PAGE_COUNT
         UserCommodityList = (
             db.session.query(UserCommodity)

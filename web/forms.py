@@ -62,3 +62,26 @@ class AddMonitorItemForm(FlaskForm):
     commodityName = StringField("Commodity name", validators=[DataRequired()])
     hopePrice = IntegerField("Hope price", validators=[DataRequired()])
     submit = SubmitField("Add monitor")
+
+
+class UserinformationChangeForm(FlaskForm):
+    username = StringField(
+        "用户名(登录使用)",
+        validators=[
+            DataRequired(),
+            Regexp("^[A-Za-z][A-Za-z0-9_.]*$", message="用户名只能由字母数字和下划线组成"),
+        ],
+    )
+    name = StringField("真实姓名")
+    birthDay = StringField("出生日期")
+    telephone = StringField("电话号码",validators=[Regexp("[0-9]+",message="电话号码必须是纯数字")])
+    Email = StringField(
+        "Email", validators=[DataRequired(message="用户名不能为空"), Email(message="邮箱格式不正确")]
+    )
+    # old_password = PasswordField("旧密码", validators=[DataRequired(message="密码不能为空")])
+    # password = PasswordField("新密码", validators=[DataRequired(message="密码不能为空")])
+    # confirm_password = PasswordField(
+    #     "确认新密码",
+    #     validators=[DataRequired("不能为空"), EqualTo("password", message="两次密码不一致")],
+    # )
+    submit = SubmitField("保存")

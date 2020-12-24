@@ -1,1 +1,65 @@
 {% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+  <h2>编辑用户信息</h2>
+  <h3 style="color:red;">带*为必填</h3>
+  <form action="" enctype="multipart/form-data" method="POST">
+    {{ form.csrf_token() }}
+    <label>*用户名:</label>
+    <p>
+        {{ form.username }}
+    </p>
+    {% for error in form.errors.username %}
+        <p style="color:red;">[-] {{ error }}</p>
+    {% endfor %}
+
+    <label>姓名</label>
+    <p>
+      {{ form.name }}
+    </p>
+      {% for error in form.errors.name %}
+          <p style="color:red;">[-] {{ error }}</p>
+      {% endfor %}
+
+    <label>出生日期</label>
+    <p>
+      {{ form.birthDay(type="date")}}
+    </p>
+      {% for error in form.errors.birthDay %}
+          <p style="color:red;">[-] {{ error }}</p>
+      {% endfor %}
+
+    <label>电话号码</label>
+    <p>
+      {{ form.telephone }}
+    </p>
+      {% for error in form.errors.telephone %}
+          <p style="color:red;">[-] {{ error }}</p>
+      {% endfor %}
+
+    <label>*Email</label>
+    <p>
+      {{ form.Email }}
+    </p>
+      {% for error in form.errors.Email %}
+          <p style="color:red;">[-] {{ error }}</p>
+      {% endfor %}
+
+      <p>{{ form.submit }}</p>
+
+    </p>
+  </form>
+</div>
+
+<script>
+  var now = new Date();
+  //格式化日，如果小于9，前面补0
+  var day = ("0" + now.getDate()).slice(-2);
+  //格式化月，如果小于9，前面补0
+  var month = ("0" + (now.getMonth() + 1)).slice(-2);
+  //拼装完整日期格式
+  var today = now.getFullYear()+"-"+(month)+"-"+(day);
+  $("#birthDay").val(today);
+</script>
+
+{% endblock %}

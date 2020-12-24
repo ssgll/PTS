@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from flask import render_template, redirect, url_for, request, flash, session
-from web.forms import LoginForm, SignUpForm, AddMonitorItemForm
+from flask import render_template, redirect, url_for, request, flash, session, render_template_string, jsonify
+from web.forms import LoginForm, SignUpForm, AddMonitorItemForm, UserinformationChangeForm
 from models import db, UserInformation, UserCommodity
 from flask_login import login_required, logout_user, login_user, current_user
 from werkzeug.security import check_password_hash
@@ -177,5 +177,21 @@ def commChange(commodityID):
 # 用户信息修改
 @login_required
 def userInformationChange():
-    User = db.session.query(UserInformation.id == current_user.id).first()
-    return render_template("usreInformationChange.html")
+    user = db.session.query(UserInformation).filter(UserInformation.id == current_user.id).one()
+    form = UserinformationChangeForm(username=user.userName,name=user.name,telephone=user.telephone,Email=user.email)
+    if request.method == "POST" and form.validate_on_submit():
+        new_data = {
+            "userName": request.form.get("username"),
+            "birthDate": request.form.get("birthDay"),
+            "telephone": request.form.get("telephone"),
+            "name": request.form.get("name"),
+            "email": request.form.get("Email"),
+        }
+        try:
+            db.session.query(UserInformation).filter(UserInformation.id == current_user.id).update(new_data)
+            db.session.commit()
+            return render_template("replace.html")
+        except Exception as e:
+            return jsonify({"message":"error!"}),404
+
+    return render_template("usreInformationChange.html", form=form)

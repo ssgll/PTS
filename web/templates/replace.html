@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+      {% block content %}
+      <div>修改成功,<span id='d'></span>s后返回主页...</div>
+      <script>
+      function show_time(time) {
+          $("#d").text(time);
+          time -= 1;
+          if (time === 0) {
+              $("#d").text(time);
+              window.location.replace("{{ url_for('webBlueprint.index') }}")
+          }
+          if (time != 0) {
+              setTimeout(function() {
+                  show_time(time)
+              },
+              1000);
+          }
+      }
+      $(function(){
+        show_time(3);
+      })
+      </script>
+{% endblock %}
