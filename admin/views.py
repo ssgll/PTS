@@ -8,12 +8,15 @@ PAGE_COUNT = 15
 
 
 def UserInformationView(page=1):
-    identified = (
-        db.session.query(UserInformation)
-        .filter(UserInformation.id == current_user.id,UserInformation.status=='0000')
-        .one()
-        .type
-    )
+    try:
+        identified = (
+            db.session.query(UserInformation)
+            .filter(UserInformation.id == current_user.id,UserInformation.status=='0000')
+            .one()
+            .type
+        )
+    except Exception as e:
+        identified = False    
     if identified:
         global PAGE_COUNT
         UserInformationList = (
