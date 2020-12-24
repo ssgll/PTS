@@ -88,6 +88,6 @@ class UserinformationChangeForm(FlaskForm):
 
 class PasswordForm(FlaskForm):
     old_pass = PasswordField("旧密码", validators=[DataRequired(message="旧密码不能为空")])
-    new_pass = PasswordField("新密码", validators=[DataRequired(message="请填写新密码"),Regexp("^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,20}$",message="密码至少包含数字、字母字符中的两种以上")])
+     new_pass = PasswordField("新密码", validators=[DataRequired(message="请填写新密码"),Regexp("^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{6,20}$",message="密码至少包含数字、字母字符中的两种以上")])
     confirm_pass = PasswordField("确认新密码", validators=[DataRequired(message="请重新输入新密码"),EqualTo("new_pass", message="两次密码不一致")])
     submit = SubmitField("保存")

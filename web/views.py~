@@ -206,18 +206,17 @@ def changePassword():
         old_pass = request.form.get("old_pass")
         new_pass = request.form.get("new_pass")
         if check_password_hash(user.passwordHash,old_pass):
-            if old_pass == new_pass:
-                flash("新密码不能与当前密码相同")
-                return redirect(url_for("webBlueprint.changepassword"))
-            else:
-                try:
-                    user.password = new_pass
-                    db.session.commit()
-                    return render_template("replace.html")
-                except Exception as e:
-                    return jsonify({"message":"error"}),404
+            try:
+                user.password = new_pass
+                db.session.commit()
+                return render_template("replace.html")
+            except Exception as e:
+                return jsonify({"message":"error"}),404
 
         else:
             flash("当前密码错误")
+            return redirect(url_for("webBlueprint.changepassword"))
+        if old_pass == new_pass:
+            flash("新密码不能与当前密码相同")
             return redirect(url_for("webBlueprint.changepassword"))
     return render_template("changePassword.html",form=form)

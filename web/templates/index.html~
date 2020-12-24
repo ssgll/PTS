@@ -54,7 +54,7 @@
                                 <li><a href="{{ url_for('adminBlueprint.admin',page=1)}}">管理</a>
                                 </li>
 				<li>
-					<a href="{{ url_for('webBlueprint.changepassword') }}">修改密码</a>
+					<a href="{{ url_for('adminBlueprint.changepassword') }}">修改密码</a>
 				</li>
 				<li><a href="{{ url_for('webBlueprint.logout', user_id = current_user.id) }}">登出</a>
                                 </li>

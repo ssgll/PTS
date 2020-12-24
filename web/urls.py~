@@ -12,7 +12,6 @@ from web.views import (
     monitorChange,
     commChange,
     userInformationChange,
-    changePassword,
 )
 
 # index
@@ -73,8 +72,6 @@ webBlueprint.add_url_rule(
     view_func=userInformationChange,
     methods=["POST", "GET"],
 )
-
-webBlueprint.add_url_rule("/changepassword",endpoint="changepassword",view_func=changePassword,methods=["GET", "POST"],)
 # webBlueprint.add_url_rule("/about-me", "aboutme", about_me, methods=["POST", "GET"])
 # webBlueprint.add_url_rule("/iot2012", "iot2012", iot2012, methods=["POST", "GET"])
 # webBlueprint.add_url_rule("/twitter", "twitter", twitter, methods=["POST", "GET"])
